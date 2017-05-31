@@ -158,7 +158,7 @@
                         } else {
                             name = 'player2';
                         }
-                        this.setState({msg:name + ' win with round ' + (count)});
+                        this.setState({msg:name + ' win with round ' + (count),player:namr});
                         clearInterval(inte);
                     } else if (testedTarget.length === 7) {
                         this.setState({msg:'draw'});
