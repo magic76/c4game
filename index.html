@@ -10,9 +10,13 @@
         <script type="text/babel">
         var column = 7;
         var row = 6;
-        var initArr = [];
-        for(var i=0; i<column; i++){
-            initArr.push([]);
+        
+        function initArr () {
+            var arr = [];
+            for(var i=0; i<column; i++){
+                arr.push([]);
+            }
+            return arr;
         }
         
         function checkResult(arr, player) {
@@ -107,7 +111,7 @@
             constructor(props) {
                 super(props);
                 this.state = {
-                    arr: initArr,
+                    arr: initArr(),
                     player1: 'o',
                     player2: 'x',
                     finished: false,
@@ -149,7 +153,7 @@
                 var player2 = this.state.player2;
                 var nowPlay = player1;
                 var count=1;
-                this.setState({arr: initArr});
+                this.setState({arr: initArr()});
                 var inte = setInterval(()=> {
                     var target = null;
                     var arr = this.state.arr;
@@ -240,7 +244,7 @@
                             <div style={this.state.player === 'player2' ? Object.assign({backgroundColor: 'yellow'}, btnStyle) : btnStyle}>player2</div>
                             <div onClick={this.autoRun} style={btnStyle}>auto</div>
                             <div style={btnStyle} onClick={()=>{this.setState({
-                                arr: initArr,
+                                arr: initArr(),
                                 msg:''
                                 })}}>clear</div>
                         </div>
