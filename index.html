@@ -8,11 +8,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.4.2/react-dom.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
         <script type="text/babel">
+        var column = 7;
+        var row = 6;
+        var initArr = [];
+        for(var i=0; i<column; i++){
+            initArr.push([]);
+        }
+        
         function checkResult(arr, player) {
-            var lenX = 7;
-            var lenY = 6;
+            var lenX = column;
+            var lenY = row;
             var count = 0;
             var result = false;
+            // column
             for (var i = 0; i<lenY; i++){
                 if(checkRow(arr[i], player)){
                     result = true;
@@ -20,9 +28,10 @@
                 };
             }
             if (!result) {
-                for (var j = 0; j<lenX; j++){
+                // row
+                for (var j = 0; j<lenY; j++){
                     var a = [];
-                    for (var i = 0; i<lenY; i++){
+                    for (var i = 0; i<lenX; i++){
                         a.push(arr[i][j]);
                     }
                     if(checkRow(a, player)){
@@ -98,7 +107,7 @@
             constructor(props) {
                 super(props);
                 this.state = {
-                    arr: [[],[],[],[],[],[],[]],
+                    arr: initArr,
                     player1: 'o',
                     player2: 'x',
                     finished: false,
@@ -140,19 +149,19 @@
                 var player2 = this.state.player2;
                 var nowPlay = player1;
                 var count=1;
-                this.setState({arr:[[],[],[],[],[],[],[]]});
+                this.setState({arr: initArr});
                 var inte = setInterval(()=> {
                     var target = null;
                     var arr = this.state.arr;
                     var testedTarget = [];
-                    while (target === null || (arr[target].length > 6 && testedTarget.length < 7)) {
-                        target = Math.floor(Math.random()*7);
+                    while (target === null || (arr[target].length > row && testedTarget.length < column)) {
+                        target = Math.floor(Math.random()*column);
                         if (testedTarget.indexOf(target)<0) {
                             testedTarget.push(target);
                         }
                     }
 
-                    if (arr[target].length < 6 && this.playRun(arr, target, nowPlay)){
+                    if (arr[target].length < row && this.playRun(arr, target, nowPlay)){
                         var name;
                         if (nowPlay === 'o') {
                             name = 'player1';
@@ -160,9 +169,12 @@
                             name = 'player2';
                         }
                         this.setState({msg:name + ' win with round ' + (count),player:name});
+                        window.arr = arr;
+                        console.log(arr)
                         clearInterval(inte);
-                    } else if (testedTarget.length === 7) {
+                    } else if (testedTarget.length === column) {
                         this.setState({msg:'draw'});
+                        window.arr = arr;
                         console.log(arr)
                         clearInterval(inte);
                     };
@@ -181,9 +193,9 @@
             render() {
                 var arr = this.state.arr;
                 var result = [];
-                for(var i = 5; i >= 0 ; i--){
+                for(var i = row -1; i >= 0 ; i--){
                     var rowCell = [];
-                    for (var j = 0;j < 7; j++){
+                    for (var j = 0;j < column; j++){
                         if(!arr[j][i]){
                             rowCell.push(<UnitCell key={`${i}_${j}`} player='' />);
                         } else {
@@ -202,6 +214,11 @@
                                 cursor: 'pointer'
                             };
                 var selectBtnStyle = Object.assign({backgroundColor: 'green'}, btnStyle);
+
+                var selects = [];
+                for(var i=0 ; i< column ; i++){
+                    selects.push(<div key={'select_'+i} style={selectBtnStyle} onClick={this.playerPlay.bind(this,i)}></div>)
+                }
                 return (
                     <div style={{
                         width: '300px'
@@ -212,13 +229,7 @@
                             display: 'flex',
                             justifyContent: 'space-between'
                         }}>
-                            <div style={selectBtnStyle} onClick={()=>{this.playerPlay(0)}}></div>
-                            <div style={selectBtnStyle} onClick={()=>{this.playerPlay(1)}}></div>
-                            <div style={selectBtnStyle} onClick={()=>{this.playerPlay(2)}}></div>
-                            <div style={selectBtnStyle} onClick={()=>{this.playerPlay(3)}}></div>
-                            <div style={selectBtnStyle} onClick={()=>{this.playerPlay(4)}}></div>
-                            <div style={selectBtnStyle} onClick={()=>{this.playerPlay(5)}}></div>
-                            <div style={selectBtnStyle} onClick={()=>{this.playerPlay(6)}}></div>
+                            {selects}
                         </div>
                         <div style={{
                             display: 'flex',
@@ -229,7 +240,7 @@
                             <div style={this.state.player === 'player2' ? Object.assign({backgroundColor: 'yellow'}, btnStyle) : btnStyle}>player2</div>
                             <div onClick={this.autoRun} style={btnStyle}>auto</div>
                             <div style={btnStyle} onClick={()=>{this.setState({
-                                arr:[[],[],[],[],[],[],[]],
+                                arr: initArr,
                                 msg:''
                                 })}}>clear</div>
                         </div>
