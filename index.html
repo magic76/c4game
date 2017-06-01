@@ -114,6 +114,7 @@
                 arr[x].push(player);
                 this.setState({arr:arr});
                 return checkResult(arr, player);
+                //return false;
             }
             playerPlay(x) {
                 var arr = this.state.arr;
@@ -151,7 +152,7 @@
                         }
                     }
 
-                    if (this.playRun(arr, target, nowPlay)){
+                    if (testedTarget.length < 7 && this.playRun(arr, target, nowPlay)){
                         var name;
                         if (nowPlay === 'o') {
                             name = 'player1';
@@ -162,6 +163,7 @@
                         clearInterval(inte);
                     } else if (testedTarget.length === 7) {
                         this.setState({msg:'draw'});
+                        console.log(arr)
                         clearInterval(inte);
                     };
                     if (nowPlay === player1) {
