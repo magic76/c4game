@@ -102,7 +102,7 @@
                     backgroundColor:color,
                     display: 'inline-block',
                     textAlign: 'center',
-                    borderRadius: '55px'
+                    borderRadius: '20px'
                 }
                 return (<div style={style}>{player||'-'}</div>);
             }
@@ -225,20 +225,20 @@
                 }
                 return (
                     <div style={{
-                        width: '300px'
+                        width: '100%'
                     }}>
                         {result}
                         <div style={{paddingTop: '10px'}}>click green block to put token.</div>
                         <div style={{
                             display: 'flex',
-                            justifyContent: 'space-between'
+                            justifyContent: 'space-around'
                         }}>
                             {selects}
                         </div>
                         <div style={{
                             display: 'flex',
                             paddingTop: '10px',
-                            justifyContent: 'space-between'
+                            justifyContent: 'space-around'
                         }}>
                             <div style={this.state.player === 'player1' ? Object.assign({backgroundColor: 'yellow'}, btnStyle) : btnStyle}>player1</div>
                             <div style={this.state.player === 'player2' ? Object.assign({backgroundColor: 'yellow'}, btnStyle) : btnStyle}>player2</div>
