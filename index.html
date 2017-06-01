@@ -72,6 +72,8 @@
             }
             return false;
         }
+
+
         class UnitCell extends React.Component {
             render() {
                 var player = this.props.player;
@@ -106,6 +108,7 @@
                 this.autoRun = this.autoRun.bind(this);
                 this.playerPlay = this.playerPlay.bind(this);
             }
+
             playRun(arr, x, player) {
                 var arr = this.state.arr;
                 arr[x].push(player);
@@ -116,6 +119,7 @@
             playerPlay(x) {
                 var arr = this.state.arr;
                 arr[x].push(this.state[this.state.player]);
+
                 if (checkResult(arr, this.state[this.state.player])) {
                     this.setState({
                         arr: arr,
@@ -147,7 +151,8 @@
                             testedTarget.push(target);
                         }
                     }
-                    if (testedTarget.length < 7 && this.playRun(arr, target, nowPlay)){
+
+                    if (arr[target].length < 6 && this.playRun(arr, target, nowPlay)){
                         var name;
                         if (nowPlay === 'o') {
                             name = 'player1';
@@ -171,6 +176,7 @@
                 
             }
             componentDidMount() {
+
             }
             render() {
                 var arr = this.state.arr;
