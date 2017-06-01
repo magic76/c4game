@@ -1,2 +1,2 @@
 # c4game
-https://github.com/magic76/c4game
+https://magic76.github.io/c4game/
