@@ -182,13 +182,9 @@
 								name = 'player2';
 							}
 							this.setState({ msg: name + ' win with round ' + count, player: name });
-							window.arr = arr;
-							console.log(arr);
 							clearInterval(this.inte);
 						} else if (testedTarget.length === column) {
 							this.setState({ msg: 'draw' });
-							window.arr = arr;
-							console.log(arr);
 							clearInterval(this.inte);
 						}
 						if (nowPlay === player1) {
