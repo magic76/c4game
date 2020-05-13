@@ -113,17 +113,17 @@
 					return <div style={style}>{}</div>;
 				}
 			}
-			const defaultState = {
+			const getDefaultState = () => ({
 				arr: initArr(),
 				player1: 'o',
 				player2: 'x',
 				msg: '',
 				player: 'player1',
-			};
+			});
 			class Container extends React.Component {
 				constructor(props) {
 					super(props);
-					this.state = defaultState;
+					this.state = getDefaultState();
 					this.autoRun = this.autoRun.bind(this);
 					this.playerPlay = this.playerPlay.bind(this);
 				}
@@ -137,7 +137,7 @@
 				}
 				playerPlay(x) {
 					if (this.state.msg) {
-						this.setState(defaultState);
+						this.setState(getDefaultState());
 						return;
 					}
 					var arr = this.state.arr;
@@ -292,7 +292,7 @@
 									style={functionButtonStyle}
 									onClick={() => {
 										this.inte && clearInterval(this.inte);
-										this.setState(defaultState);
+										this.setState(getDefaultState());
 									}}
 								>
 									clear
